@@ -721,7 +721,7 @@ func evalTTL(args []string, store *Store) []byte {
 // returns the count of total deleted keys after encoding
 func evalDEL(args []string, store *Store) []byte {
 	var countDeleted int = 0
-
+	println("DELRAGHAV ", args)
 	for _, key := range args {
 		if ok := store.Del(key); ok {
 			countDeleted++

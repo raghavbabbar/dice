@@ -69,6 +69,7 @@ func TestQWATCH(t *testing.T) {
 }
 
 func TestQWATCHWithSDK(t *testing.T) {
+	println("in TestQWATCHWithSDK all")
 	publisher, subscribers, cleanup := setupQWATCHTestWithSDK(t)
 	defer cleanup()
 
@@ -89,6 +90,7 @@ func setupQWATCHTest(t *testing.T) (net.Conn, []net.Conn, func()) {
 		for _, sub := range subscribers {
 			fireCommand(sub, fmt.Sprintf("QUNWATCH \"%s\"", qWatchQuery))
 			time.Sleep(100 * time.Millisecond)
+			println("in TestQWATCHWithSDK all")
 			if err := sub.Close(); err != nil {
 				t.Errorf("Error closing subscriber connection: %v", err)
 			}
@@ -137,6 +139,8 @@ func subscribeToQWATCH(t *testing.T, subscribers []net.Conn) []*core.RESPParser 
 			return nil
 		}
 		assert.Equal(t, 3, len(castedValue))
+		println("in TestQWATCHWithSDK all")
+
 	}
 	return respParsers
 }
@@ -153,6 +157,8 @@ func subscribeToQWATCHWithSDK(t *testing.T, subscribers []qWatchSDKSubscriber) [
 		assert.NilError(t, err)
 		channels[i] = qwatch.Channel()
 		<-channels[i] // Get the first message
+		println("in TestQWATCHWithSDK all")
+
 	}
 	return channels
 }
@@ -173,6 +179,7 @@ func publishUpdate(t *testing.T, publisher interface{}, tc qWatchTestCase) {
 	case *redis.Client:
 		err := p.Set(context.Background(), key, tc.score, 0).Err()
 		assert.NilError(t, err)
+
 	}
 }
 
